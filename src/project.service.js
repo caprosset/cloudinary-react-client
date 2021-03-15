@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const projectApi = axios.create({
-  baseURL: `${process.env.REACT_APP_API}/api`
+  baseURL: `${process.env.REACT_APP_API}/api`,
+  withCredentials: true
 })
 
 export const getProjectsService = () => projectApi.get('/projects');
