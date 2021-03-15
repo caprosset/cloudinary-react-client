@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
+import NewProject from './components/NewProject';
+import ProjectList from './components/ProjectList';
+import {getProjectsService, createProjectService} from './project.service';
 
 function App() {
+  const [ projects, setProjects ] = useState([]);
+
+  useEffect(() => {
+    getProjectsService()
+    .then( ({data}) => setProjects(data))
+    .catch( (err) => console.log(err));
+  }, [])
+
+  const createProject = async (newProject) => {
+    const { data: createdProject } = await createProjectService(newProject);
+    console.log('data :>> ', createdProject);
+    setProjects([...projects, createdProject]);
+  }
+
+  console.log('projects :>> ', projects);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NewProject addProject={createProject} />
+
+      <ProjectList projects={projects} />
     </div>
   );
 }
