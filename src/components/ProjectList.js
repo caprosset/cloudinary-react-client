@@ -20,7 +20,7 @@ export default function ProjectList({ projects }) {
 class DownloadLink extends React.Component {
     render() {
         return (
-            <a href={this.props.src} download target="_blank" >{this.props.children}</a>
+            <a href={this.props.src} download target="_blank" rel="noreferrer">{this.props.children}</a>
         )
     }
 }
